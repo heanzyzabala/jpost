@@ -2,7 +2,7 @@ package com.heanzyzabala.jpost.service;
 
 import com.heanzyzabala.jpost.domain.Comment;
 import com.heanzyzabala.jpost.domain.Post;
-import com.heanzyzabala.repository.PostRepository;
+import com.heanzyzabala.jpost.repository.PostRepository;
 
 import java.util.UUID;
 

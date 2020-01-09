@@ -1,4 +1,4 @@
-package com.heanzyzabala.repository;
+package com.heanzyzabala.jpost.repository;
 
 import com.heanzyzabala.jpost.domain.Post;
 
