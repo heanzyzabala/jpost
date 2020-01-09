@@ -7,5 +7,6 @@ import java.util.UUID;
 
 public interface PostService {
     Post create(Post post);
-    Post comment(UUID id, Comment comment);
+    Post get(UUID id);
+    Comment comment(UUID id, Comment comment);
 }

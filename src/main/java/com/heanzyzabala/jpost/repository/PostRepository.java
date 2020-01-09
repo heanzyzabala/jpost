@@ -1,10 +1,9 @@
 package com.heanzyzabala.jpost.repository;
 
 import com.heanzyzabala.jpost.domain.Post;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface PostRepository {
-    Post save(Post post);
-    Post find(UUID id);
+public interface PostRepository extends JpaRepository<Post, UUID> {
 }

@@ -7,8 +7,8 @@ public class RequestToPostConverter implements Converter<PostRequest, Post> {
     @Override
     public Post convert(PostRequest postRequest) {
         Post post = new Post();
-        post.setTitle(post.getTitle());
-        post.setContent(post.getContent());
+        post.setTitle(postRequest.getTitle());
+        post.setContent(postRequest.getContent());
         return post;
     }
 }

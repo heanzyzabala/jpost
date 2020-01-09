@@ -11,10 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -36,11 +39,17 @@ public class JPostController {
         return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
     }
 
+    @GetMapping("v1/posts/{id}")
+    public ResponseEntity<Post> get(@PathVariable UUID id) {
+        Post post = postService.get(id);
+        return new ResponseEntity<>(post, HttpStatus.OK);
+    }
+
     @PostMapping("v1/posts/{id}/comments")
-    public ResponseEntity<Post> comment(@PathVariable(value = "id") UUID id,
+    public ResponseEntity<Comment> comment(@PathVariable(value = "id") UUID id,
                                         @RequestBody CommentRequest request) {
         Comment comment = toCommentConverter.convert(request);
-        Post updatedPost = postService.comment(id, comment);
-        return new ResponseEntity<>(updatedPost, HttpStatus.CREATED);
+        Comment createdComment = postService.comment(id, comment);
+        return new ResponseEntity<>(createdComment, HttpStatus.CREATED);
     }
 }
