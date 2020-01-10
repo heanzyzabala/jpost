@@ -2,6 +2,7 @@ package com.heanzyzabala.jpost.service;
 
 import com.heanzyzabala.jpost.domain.Comment;
 import com.heanzyzabala.jpost.domain.Post;
+import com.heanzyzabala.jpost.exception.PostNotFoundException;
 import com.heanzyzabala.jpost.repository.CommentRepository;
 import com.heanzyzabala.jpost.repository.PostRepository;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,10 +12,12 @@ import org.junit.jupiter.api.TestInstance;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -80,10 +83,16 @@ public class DefaultPostServiceTest {
         expected.setCreatedAt(now);
         expected.setUpdatedAt(now);
 
-        when(postRepository.getOne(id)).thenReturn(expected);
+        when(postRepository.findById(id)).thenReturn(Optional.of(expected));
         when(commentRepository.findByPostId(id)).thenReturn(Collections.emptyList());
 
         assertPost(expected, service.get(id));
+    }
+
+    @Test
+    public void onGetShouldThrowExceptionWhenPostDoesNotExist() {
+        when(postRepository.findById(id)).thenReturn(Optional.empty());
+        assertThrows(PostNotFoundException.class, () -> service.get(id));
     }
 
     @Test
@@ -98,10 +107,16 @@ public class DefaultPostServiceTest {
         Comment expected = new Comment();
         expected.setContent("Comment content");
 
-        when(postRepository.getOne(id)).thenReturn(post);
+        when(postRepository.existsById(id)).thenReturn(true);
         when(commentRepository.save(expected)).thenReturn(expected);
 
         assertComment(expected, service.comment(id, expected));
+    }
+
+    @Test
+    public void onCommentShouldThrowExceptionWhenPostDoesNotExist() {
+        when(postRepository.existsById(id)).thenReturn(false);
+        assertThrows(PostNotFoundException.class, () -> service.comment(id, new Comment()));
     }
 
     static class UuidSupplier implements Supplier<UUID> {
