@@ -2,12 +2,10 @@ package com.heanzyzabala.jpost.service;
 
 import com.heanzyzabala.jpost.domain.Comment;
 import com.heanzyzabala.jpost.domain.Post;
-import com.heanzyzabala.jpost.exception.PostNotFoundException;
 import com.heanzyzabala.jpost.repository.CommentRepository;
 import com.heanzyzabala.jpost.repository.PostRepository;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -37,14 +35,14 @@ public class DefaultPostService implements PostService {
 
     @Override
     public Post get(UUID id) {
-        Post post = repository.findById(id).get();
+        Post post = repository.getOne(id);
         post.setComments(commentRepository.findByPostId(id));
         return post;
     }
 
     @Override
     public Comment comment(UUID id, Comment comment) {
-        Post post = repository.findById(id).get();
+        Post post = repository.getOne(id);
         comment.setId(uuidSupplier.get());
         comment.setPostId(post.getId());
         comment.setCreatedAt(nowSupplier.get());

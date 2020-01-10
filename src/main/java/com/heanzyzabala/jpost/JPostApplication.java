@@ -9,5 +9,4 @@ public class JPostApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(JPostApplication.class, args);
 	}
-
 }
