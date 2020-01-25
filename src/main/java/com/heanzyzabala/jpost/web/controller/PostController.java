@@ -30,20 +30,20 @@ public class PostController {
     @Autowired
     private RequestToCommentConverter toCommentConverter;
 
-    @PostMapping("v1/posts")
+    @PostMapping("api/v1/posts")
     public ResponseEntity<Post> create(@RequestBody PostRequest request) {
         Post post = toPostConverter.convert(request);
         Post createdPost = postService.create(post);
         return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
     }
 
-    @GetMapping("v1/posts/{id}")
+    @GetMapping("api/v1/posts/{id}")
     public ResponseEntity<Post> get(@PathVariable UUID id) {
         Post post = postService.get(id);
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
-    @PostMapping("v1/posts/{id}/comments")
+    @PostMapping("api/v1/posts/{id}/comments")
     public ResponseEntity<Comment> comment(@PathVariable(value = "id") UUID id,
                                         @RequestBody CommentRequest request) {
         Comment comment = toCommentConverter.convert(request);

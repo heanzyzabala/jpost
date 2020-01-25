@@ -1,6 +1,4 @@
 spring:
-  profiles:
-    active: dev
   datasource:
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/jpost
@@ -11,3 +9,8 @@ spring:
     hibernate:
       ddl-auto: validate
 
+  security:
+    oauth2:
+      resource:
+        jwt:
+          key-value: classpath:public.pem
