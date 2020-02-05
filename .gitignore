@@ -4,6 +4,9 @@ build/
 !**/src/main/**
 !**/src/test/**
 
+## Local config files
+src/main/resources/application-dev.yaml
+
 ### STS ###
 .apt_generated
 .classpath
